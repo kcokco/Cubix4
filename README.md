@@ -12,6 +12,7 @@ Ez a projekt a **RAG-alapú AI asszisztens** fejlesztésének és iteratív jav�
 - [Postgres](https://www.postgresql.org/) with [pgvector](https://github.com/pgvector/pgvector)
 - Python evaluációs scriptek (02_code)
 
+---
 
 ## 1. Kiindulási Pont
 
@@ -53,6 +54,7 @@ Ez a projekt az **előző házi (Cubix3) megoldásán alapul**, amely egy műkö
 **Válasz:** Helyesen visszautasította - "No relevant information found"
 **Megállapítás:** Helyesen működik, nem hallucinálja a quinoa recepteket
 
+---
 
 ## 3. Azonosított Probléma - Az Aspektus amit Javítunk
 
@@ -70,6 +72,7 @@ Ez a projekt az **előző házi (Cubix3) megoldásán alapul**, amely egy műkö
 - A RAG rendszer lényege, hogy **csak az adatbázist követi**, nem a saját tudást
 - **Hallucináció megelőzése**
 
+---
 
 ## 4. Baseline Mérés Terve
 
@@ -79,6 +82,7 @@ A Python evaluációs scriptek (02_code) segítségével:
 2. **Metrikai pontosság**: Hány % az olyan receptek száma, ahol az összetevők 100%-ban azonosak?
 3. **Teljesség**: Hány % az olyan receptek, ahol nem hiányzik vagy módosított az információ?
 
+---
 
 ## 5. Iterációs Fejlesztés
 
@@ -96,6 +100,20 @@ A Python evaluációs scriptek (02_code) segítségével:
 
 ---
 
+## Evaluation Framework
+
+A projekt iteratív fejlesztéshez egy **evaluation/** mappát tartalmaz Python scriptek és a golden dataset-tel.
+
+**Teljes dokumentáció:** Lásd: `../evaluation/README.md`
+
+### Gyors Áttekintés
+
+- **golden_dataset.json**: Receptadatbázisonból származó 4 teszt eset
+- **single_turn_evaluation.py**: LLM Judge alapú mérés
+- **Cél**: Objektív metrikákat nyújtani az iteratív fejlesztéshez
+
+---
+
 ## 6. Fejlesztési Lehetőségek (Jövőbeli)
 
 - [ ] Metadata szűrés (prep_time, vegetarian, cuisine, stb.)
@@ -103,7 +121,7 @@ A Python evaluációs scriptek (02_code) segítségével:
 - [ ] Hallucináció detektálás (comparing DB vs. output)
 - [ ] User feedback loop (thumbs up/down)
 
-
+---
 
 ## Irodalom
 
