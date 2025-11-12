@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "name": "Baseline Recipe Evaluation Dataset",
+    "version": "1.0.0",
+    "created": "2025-11-12",
+    "description": "Golden dataset for baseline measurement and iterative evaluation"
+  },
+  "total_queries": 4,
+  "accuracy_total": 0,
+  "relevance_total": 0,
+  "detailed_results": [
+    {
+      "document_title": "Chickpea Recipes",
+      "query": "What can I make with chickpeas?",
+      "expected_response": "You can make Hummus, Channa Masala (Chickpea Curry), and Chickpea Salad with chickpeas. Each is a delicious and popular dish.",
+      "generated_response": "Error calling API: 500 Server Error: Internal Server Error for url: http://localhost:3000/api/chat",
+      "accuracy": {
+        "score": 0,
+        "reasoning": "The generated response is completely unrelated to the expected response. It seems to be an error message from a server, not a response about chickpea dishes.",
+        "raw_response": "REASONING: The generated response is completely unrelated to the expected response. It seems to be an error message from a server, not a response about chickpea dishes.\nSCORE: 0"
+      },
+      "relevance": {
+        "score": 0,
+        "reasoning": "The generated response is completely irrelevant to the user's query. The user asked for suggestions on what they can make with chickpeas, but the response is an error message from a server, which doesn't provide any information related to the user's query.",
+        "raw_response": "REASONING: The generated response is completely irrelevant to the user's query. The user asked for suggestions on what they can make with chickpeas, but the response is an error message from a server, which doesn't provide any information related to the user's query.\nSCORE: 0"
+      }
+    },
+    {
+      "document_title": "Potato Recipes",
+      "query": "What can I make with potatoes?",
+      "expected_response": "You can make Creamy Potato Soup, Aloo Matar (Potato and Pea Curry), and Potato and Green Chili Hash with potatoes.",
+      "generated_response": "Error calling API: 500 Server Error: Internal Server Error for url: http://localhost:3000/api/chat",
+      "accuracy": {
+        "score": 0,
+        "reasoning": "The generated response is not related to the expected response at all. It seems to be an error message from a server, not a list of dishes that can be made with potatoes.",
+        "raw_response": "REASONING: The generated response is not related to the expected response at all. It seems to be an error message from a server, not a list of dishes that can be made with potatoes.\nSCORE: 0"
+      },
+      "relevance": {
+        "score": 0,
+        "reasoning": "The generated response is a server error message and does not provide any information related to the user's query about what they can make with potatoes. Therefore, it is completely irrelevant.",
+        "raw_response": "REASONING: The generated response is a server error message and does not provide any information related to the user's query about what they can make with potatoes. Therefore, it is completely irrelevant.\nSCORE: 0"
+      }
+    },
+    {
+      "document_title": "Thai Recipes",
+      "query": "Do you have any Thai recipes?",
+      "expected_response": "Yes, I have Pad Thai and Thai Fried Rice (Khao Phat). Both are authentic Thai dishes with detailed recipes.",
+      "generated_response": "Error calling API: 500 Server Error: Internal Server Error for url: http://localhost:3000/api/chat",
+      "accuracy": {
+        "score": 0,
+        "reasoning": "The generated response is completely unrelated to the expected response. It seems like a technical error message rather than a response to the question about Thai dishes.",
+        "raw_response": "REASONING: The generated response is completely unrelated to the expected response. It seems like a technical error message rather than a response to the question about Thai dishes.\nSCORE: 0"
+      },
+      "relevance": {
+        "score": 0,
+        "reasoning": "The generated response is a server error message and does not provide any information related to the user's query about Thai recipes. Therefore, it is completely irrelevant.",
+        "raw_response": "REASONING: The generated response is a server error message and does not provide any information related to the user's query about Thai recipes. Therefore, it is completely irrelevant.\nSCORE: 0"
+      }
+    },
+    {
+      "document_title": "Non-existent Ingredient",
+      "query": "What can I make with quinoa?",
+      "expected_response": "I don't have information about that in my recipe database. Would you like to try a different search?",
+      "generated_response": "Error calling API: 500 Server Error: Internal Server Error for url: http://localhost:3000/api/chat",
+      "accuracy": {
+        "score": 0,
+        "reasoning": "The generated response is completely incorrect. It does not address the user's request for information from a recipe database, nor does it suggest trying a different search. Instead, it provides an error message about a server issue, which is not relevant to the expected response.",
+        "raw_response": "REASONING: The generated response is completely incorrect. It does not address the user's request for information from a recipe database, nor does it suggest trying a different search. Instead, it provides an error message about a server issue, which is not relevant to the expected response.\nSCORE: 0"
+      },
+      "relevance": {
+        "score": 0,
+        "reasoning": "The generated response is completely irrelevant to the user's query. The user asked for suggestions on what they can make with quinoa, but the response is an error message related to an API call, which has nothing to do with the user's query.",
+        "raw_response": "REASONING: The generated response is completely irrelevant to the user's query. The user asked for suggestions on what they can make with quinoa, but the response is an error message related to an API call, which has nothing to do with the user's query.\nSCORE: 0"
+      }
+    }
+  ],
+  "average_accuracy": 0.0,
+  "average_relevance": 0.0
+}
