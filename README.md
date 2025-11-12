@@ -74,16 +74,6 @@ Ez a projekt az **előző házi (Cubix3) megoldásán alapul**, amely egy műkö
 
 ---
 
-## 4. Baseline Mérés Terve
-
-A Python evaluációs scriptek (02_code) segítségével:
-
-1. **LLM Judge alapú értékelés**: 0-3 skálán (0=rossz, 3=tökéletes)
-2. **Metrikai pontosság**: Hány % az olyan receptek száma, ahol az összetevők 100%-ban azonosak?
-3. **Teljesség**: Hány % az olyan receptek, ahol nem hiányzik vagy módosított az információ?
-
----
-
 ## 5. Iterációs Fejlesztés
 
 (Még nem hajtott végre - Baseline után)
@@ -102,15 +92,48 @@ A Python evaluációs scriptek (02_code) segítségével:
 
 ## Evaluation Framework
 
-A projekt iteratív fejlesztéshez egy **evaluation/** mappát tartalmaz Python scriptek és a golden dataset-tel.
+A projekt iteratív fejlesztéshez egy **evaluation/** mappát tartalmaz Python scriptek, LLM Judge, és a golden dataset-tel.
 
-**Teljes dokumentáció:** Lásd: `../evaluation/README.md`
+### Framework Leírása
 
-### Gyors Áttekintés
+Az **LLM-as-a-Judge** megközelítést alkalmazzuk az AI válaszainak értékelésére:
 
-- **golden_dataset.json**: Receptadatbázisonból származó 4 teszt eset
-- **single_turn_evaluation.py**: LLM Judge alapú mérés
-- **Cél**: Objektív metrikákat nyújtani az iteratív fejlesztéshez
+- **Accuracy (0-3)**: Az információ helyes és teljes-e?
+- **Relevance (0-3)**: A válasz megválaszolja-e a felhasználó kérdését?
+
+### Baseline Evaluation Results
+
+**Baseline Teljesítmény:**
+- **Average Accuracy: 1.5/3** ❌ (Hiányos receptek - csak részleges információ)
+- **Average Relevance: 1.75/3** ⚠️ (Általában releváns, de inkonzisztenciákkal)
+
+**Azonosított Probléma:** Az AI csak részleges recepteket ad vissza, több ételt kihagyva.
+
+**Részletes Bontás:**
+
+| Kérdés 	| Accuracy  | Relevance | Probléma 												|
+|-----------|-----------|-----------|-------------------------------------------------------|
+| Chickpeas | 1/3 		| 3/3 		| Csak 1 recept helyett 3-ból 							|
+| Potatoes  | 1/3 		| 0/3 		| Rossz tartalom és hiányzó összetevők 					|
+| Thai      | 1/3 		| 3/3 		| Pad Thai csak, Thai Fried Rice hiányzik 				|
+| Quinoa    | 3/3 		| 1/3 		| Helyes (nincs az adatbázisban), de kevés alternatíva 	|
+
+### Iterációs Fejlesztés Terve
+
+**Iteráció 1:** System prompt szigorítás - "MINDIG adj vissza ÖSSZES receptet"
+
+**Iteráció 2:** Temperature csökkentés (0.5 → 0.3) - konzervativabb válaszok
+
+**Iteráció 3:** Prompt engineering finomhangolás - explicit formátum követés
+
+### Fájlok és Dokumentáció
+
+- **evaluation/api_evaluation.py**: LLM Judge alapú mérés (GPT-4)
+- **evaluation/golden_dataset.json**: 4 teszt eset receptadatbázisonból
+- **evaluation/results/**: Evaluation eredmények (baseline + iterációk)
+- **evaluation/README.MD**: Teljes dokumentáció metodológiáról
+
+**Futtatás:** `python evaluation/api_evaluation.py`
 
 ---
 
