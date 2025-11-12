@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "name": "Baseline Recipe Evaluation Dataset",
+    "version": "1.0.0",
+    "created": "2025-11-12",
+    "description": "Golden dataset for baseline measurement and iterative evaluation"
+  },
+  "entries": [
+    {
+      "document": {
+        "title": "Chickpea Recipes",
+        "file_path": "chickpeas",
+        "category": "legumes"
+      },
+      "qa_pairs": [
+        {
+          "query": "What can I make with chickpeas?",
+          "response": "You can make Hummus, Channa Masala (Chickpea Curry), and Chickpea Salad with chickpeas. Each is a delicious and popular dish."
+        }
+      ]
+    },
+    {
+      "document": {
+        "title": "Potato Recipes",
+        "file_path": "potatoes",
+        "category": "vegetables"
+      },
+      "qa_pairs": [
+        {
+          "query": "What can I make with potatoes?",
+          "response": "You can make Creamy Potato Soup, Aloo Matar (Potato and Pea Curry), and Potato and Green Chili Hash with potatoes."
+        }
+      ]
+    },
+    {
+      "document": {
+        "title": "Thai Recipes",
+        "file_path": "thai",
+        "category": "cuisine"
+      },
+      "qa_pairs": [
+        {
+          "query": "Do you have any Thai recipes?",
+          "response": "Yes, I have Pad Thai and Thai Fried Rice (Khao Phat). Both are authentic Thai dishes with detailed recipes."
+        }
+      ]
+    },
+    {
+      "document": {
+        "title": "Non-existent Ingredient",
+        "file_path": "none",
+        "category": "negative_test"
+      },
+      "qa_pairs": [
+        {
+          "query": "What can I make with quinoa?",
+          "response": "I don't have information about that in my recipe database. Would you like to try a different search?"
+        }
+      ]
+    }
+  ]
+}
