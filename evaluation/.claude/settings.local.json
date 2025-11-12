@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/kozakc/projects/CubixHazi4/ai-sdk-rag-starter/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

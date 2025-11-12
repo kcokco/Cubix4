@@ -59,7 +59,6 @@ REASONING: [Detailed explanation]
 SCORE: [0-3]
 """
 
-
 def send_api_request(query: str) -> str:
     """
     Ez a függvény kezeli az API hívást: HTTP POST requestet küld
@@ -76,22 +75,76 @@ def send_api_request(query: str) -> str:
         Exception: If API request fails
     """
     try:
+        # Use the correct UIMessage format with parts instead of content
         payload = {
             "messages": [
-                {"role": "user", "content": query}
+                {
+                    "role": "user",
+                    "parts": [
+                        {
+                            "type": "text",
+                            "text": query
+                        }
+                    ]
+                }
             ]
         }
         
-        response = requests.post(API_URL, json=payload)
+        response = requests.post(API_URL, json=payload, timeout=30, stream=True)
         response.raise_for_status()
-        
-        # Parse the streaming response
-        # The API returns a stream, we need to collect the full response
+
         ai_response = ""
+
+        # Handle streaming response - collect all text-delta chunks
+        for line in response.iter_lines():
+            if line:
+                line = line.decode('utf-8') if isinstance(line, bytes) else line
+
+                # Handle SSE format: "data: {...json...}"
+                if line.startswith('data:'):
+                    try:
+                        json_str = line[5:].strip()
+                        chunk = json.loads(json_str)
+
+                        # Extract text from text-delta events
+                        if chunk.get('type') == 'text-delta' and 'delta' in chunk:
+                            ai_response += chunk['delta']
+                    except json.JSONDecodeError:
+                        pass
+
+        return ai_response if ai_response else "No response received"
         
-        # For now, return a simplified version
-        # In production, you'd handle the streaming properly
-        return response.text
+    except Exception as e:
+        return f"Error calling API: {str(e)}"
+
+
+        # Handle streaming response - collect all chunks
+        if response.headers.get('content-type') == 'application/x-ndjson':
+            # NDJSON format: each line is a JSON object
+            ai_response = ""
+            for line in response.iter_lines():
+                if line:
+                    try:
+                        chunk = json.loads(line)
+                        if 'text' in chunk:
+                            ai_response += chunk['text']
+                    except json.JSONDecodeError:
+                        pass
+            return ai_response if ai_response else response.text
+        else:
+            # Try parsing as JSON first
+            try:
+                data = response.json()
+                if isinstance(data, dict) and 'content' in data:
+                    return data['content']
+                elif isinstance(data, dict) and 'text' in data:
+                    return data['text']
+                elif isinstance(data, dict) and 'message' in data:
+                    return data['message']
+            except:
+                pass
+            # Fallback to text
+            return response.text
         
     except Exception as e:
         return f"Error calling API: {str(e)}"
