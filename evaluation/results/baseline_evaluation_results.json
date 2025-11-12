@@ -6,74 +6,74 @@
     "description": "Golden dataset for baseline measurement and iterative evaluation"
   },
   "total_queries": 4,
-  "accuracy_total": 0,
-  "relevance_total": 0,
+  "accuracy_total": 6,
+  "relevance_total": 7,
   "detailed_results": [
     {
       "document_title": "Chickpea Recipes",
       "query": "What can I make with chickpeas?",
       "expected_response": "You can make Hummus, Channa Masala (Chickpea Curry), and Chickpea Salad with chickpeas. Each is a delicious and popular dish.",
-      "generated_response": "Error calling API: 500 Server Error: Internal Server Error for url: http://localhost:3000/api/chat",
+      "generated_response": "You can make a delicious **Hummus** with chickpeas! Here's how to prepare it:\n\n### Hummus Recipe\n\n#### Ingredients:\n- **For the Chickpeas:**\n  - 1/2 lb dried chickpeas\n  - 1 tsp baking soda\n  - 2 tbsp kosher salt\n  - 6 cups cold water\n\n- **For the Tahini:**\n  - 1 whole head garlic, broken into individual unpeeled cloves\n  - 2/3 cup fresh lemon juice (about 3–4 lemons)\n  - 1/2 tsp ground cumin\n  - 1 cup tahini paste (about 10 oz)\n\n- **For the Hummus:**\n  - 1 tsp baking soda\n  - 1 tbsp salt\n  - 1 ",
       "accuracy": {
-        "score": 0,
-        "reasoning": "The generated response is completely unrelated to the expected response. It seems to be an error message from a server, not a response about chickpea dishes.",
-        "raw_response": "REASONING: The generated response is completely unrelated to the expected response. It seems to be an error message from a server, not a response about chickpea dishes.\nSCORE: 0"
+        "score": 1,
+        "reasoning": "The generated response is accurate in terms of providing a detailed recipe for making Hummus with chickpeas. However, it is incomplete as it does not mention the other two dishes (Channa Masala and Chickpea Salad) that were mentioned in the expected response. Therefore, while the information provided is correct and detailed, it does not fully meet the expectations set by the expected response.",
+        "raw_response": "REASONING: The generated response is accurate in terms of providing a detailed recipe for making Hummus with chickpeas. However, it is incomplete as it does not mention the other two dishes (Channa Masala and Chickpea Salad) that were mentioned in the expected response. Therefore, while the information provided is correct and detailed, it does not fully meet the expectations set by the expected response.\nSCORE: 1"
       },
       "relevance": {
-        "score": 0,
-        "reasoning": "The generated response is completely irrelevant to the user's query. The user asked for suggestions on what they can make with chickpeas, but the response is an error message from a server, which doesn't provide any information related to the user's query.",
-        "raw_response": "REASONING: The generated response is completely irrelevant to the user's query. The user asked for suggestions on what they can make with chickpeas, but the response is an error message from a server, which doesn't provide any information related to the user's query.\nSCORE: 0"
+        "score": 3,
+        "reasoning": "The generated response is highly relevant to the user's query. The user asked what they can make with chickpeas and the response provided a detailed recipe for making hummus, which is a dish primarily made from chickpeas. The response includes a list of ingredients, step-by-step instructions, and even serving suggestions, which is more than what the user asked for.",
+        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked what they can make with chickpeas and the response provided a detailed recipe for making hummus, which is a dish primarily made from chickpeas. The response includes a list of ingredients, step-by-step instructions, and even serving suggestions, which is more than what the user asked for. \nSCORE: 3"
       }
     },
     {
       "document_title": "Potato Recipes",
       "query": "What can I make with potatoes?",
       "expected_response": "You can make Creamy Potato Soup, Aloo Matar (Potato and Pea Curry), and Potato and Green Chili Hash with potatoes.",
-      "generated_response": "Error calling API: 500 Server Error: Internal Server Error for url: http://localhost:3000/api/chat",
+      "generated_response": "Here’s a delicious recipe you can try using potatoes – it's for **Potato and Green Chili Hash**! 🥔🌶️\n\n### Ingredients:\n- **1 lb high-starch potatoes** (like russets), chopped into 1/2\" chunks\n- **2 medium onions**, coarsely chopped\n- **1.5 oz butter**\n- **2 cups vegetable stock**\n- **1 cup chicken stock** (or more vegetable stock)\n- **1 cup heavy whipping cream**\n- **1 large egg yolk**\n- **2 tbsp dry white wine**\n- **1.5 oz horseradish**, freshly grated\n- **Black pepper** (to taste)\n- **Salt** (",
       "accuracy": {
-        "score": 0,
-        "reasoning": "The generated response is not related to the expected response at all. It seems to be an error message from a server, not a list of dishes that can be made with potatoes.",
-        "raw_response": "REASONING: The generated response is not related to the expected response at all. It seems to be an error message from a server, not a list of dishes that can be made with potatoes.\nSCORE: 0"
+        "score": 1,
+        "reasoning": "The generated response is partially correct. It does provide a recipe for a dish using potatoes, but it is not the correct recipe. The recipe given is not for Potato and Green Chili Hash, but rather seems to be for a creamy potato soup or something similar. The recipe does not include green chilies, which are a key ingredient in the dish mentioned in the expected response. Furthermore, the expected response asked for multiple recipes (Creamy Potato Soup, Aloo Matar, and Potato and Green Chili Hash), but the generated response only provided one recipe.",
+        "raw_response": "REASONING: The generated response is partially correct. It does provide a recipe for a dish using potatoes, but it is not the correct recipe. The recipe given is not for Potato and Green Chili Hash, but rather seems to be for a creamy potato soup or something similar. The recipe does not include green chilies, which are a key ingredient in the dish mentioned in the expected response. Furthermore, the expected response asked for multiple recipes (Creamy Potato Soup, Aloo Matar, and Potato and Green Chili Hash), but the generated response only provided one recipe.\nSCORE: 1"
       },
       "relevance": {
         "score": 0,
-        "reasoning": "The generated response is a server error message and does not provide any information related to the user's query about what they can make with potatoes. Therefore, it is completely irrelevant.",
-        "raw_response": "REASONING: The generated response is a server error message and does not provide any information related to the user's query about what they can make with potatoes. Therefore, it is completely irrelevant.\nSCORE: 0"
+        "reasoning": "The generated response is highly relevant to the user's query. The user asked for something they could make with potatoes, and the assistant provided a detailed recipe for a dish that uses potatoes as a main ingredient. The response includes the ingredients needed, step-by-step instructions, and information on the time required and the number of servings. However, the title of the recipe mentions \"Green Chili\" but there's no green chili listed in the ingredients or mentioned in the instructions. This is a minor discrepancy but it doesn't make the response irrelevant.",
+        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked for something they could make with potatoes, and the assistant provided a detailed recipe for a dish that uses potatoes as a main ingredient. The response includes the ingredients needed, step-by-step instructions, and information on the time required and the number of servings. However, the title of the recipe mentions \"Green Chili\" but there's no green chili listed in the ingredients or mentioned in the instructions. This is a minor discrepancy but it doesn't make the response irrelevant.\nSCORE: 2.5"
       }
     },
     {
       "document_title": "Thai Recipes",
       "query": "Do you have any Thai recipes?",
       "expected_response": "Yes, I have Pad Thai and Thai Fried Rice (Khao Phat). Both are authentic Thai dishes with detailed recipes.",
-      "generated_response": "Error calling API: 500 Server Error: Internal Server Error for url: http://localhost:3000/api/chat",
+      "generated_response": "I've got a delicious Thai recipe for you: **Pad Thai**! Here’s how to make it:\n\n### Pad Thai Recipe\n\n#### Ingredients:\n- **2 tbsp** vegetable oil\n- **1 large** egg (best at room temp)\n- **3 tsp** fish sauce\n- **2 tsp** dark soy sauce\n- **1 tsp** granulated sugar\n- **1 tbsp** garlic, finely chopped\n- **5 ounces** ground pork (or ground chicken thighs)\n- **1/4 cup** long beans, cut into 1/8\" slices\n- **1/4 cup** yellow onion, thinly sliced\n- **3-4** Thai green chiles\n- **3-4** dried Thai chiles (p",
       "accuracy": {
-        "score": 0,
-        "reasoning": "The generated response is completely unrelated to the expected response. It seems like a technical error message rather than a response to the question about Thai dishes.",
-        "raw_response": "REASONING: The generated response is completely unrelated to the expected response. It seems like a technical error message rather than a response to the question about Thai dishes.\nSCORE: 0"
+        "score": 1,
+        "reasoning": "The generated response is accurate in the sense that it provides a detailed recipe for Pad Thai, which is indeed an authentic Thai dish. However, it is incomplete as it does not mention the other dish, Thai Fried Rice (Khao Phat), mentioned in the expected response. Therefore, it only partially fulfills the expected response.",
+        "raw_response": "REASONING: The generated response is accurate in the sense that it provides a detailed recipe for Pad Thai, which is indeed an authentic Thai dish. However, it is incomplete as it does not mention the other dish, Thai Fried Rice (Khao Phat), mentioned in the expected response. Therefore, it only partially fulfills the expected response.\nSCORE: 1"
       },
       "relevance": {
-        "score": 0,
-        "reasoning": "The generated response is a server error message and does not provide any information related to the user's query about Thai recipes. Therefore, it is completely irrelevant.",
-        "raw_response": "REASONING: The generated response is a server error message and does not provide any information related to the user's query about Thai recipes. Therefore, it is completely irrelevant.\nSCORE: 0"
+        "score": 3,
+        "reasoning": "The generated response is highly relevant to the user's query. The user asked for a Thai recipe and the assistant provided a detailed Thai recipe for Pad Thai, including ingredients and cooking instructions. The response was well-addressed and informative.",
+        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked for a Thai recipe and the assistant provided a detailed Thai recipe for Pad Thai, including ingredients and cooking instructions. The response was well-addressed and informative.\nSCORE: 3"
       }
     },
     {
       "document_title": "Non-existent Ingredient",
       "query": "What can I make with quinoa?",
       "expected_response": "I don't have information about that in my recipe database. Would you like to try a different search?",
-      "generated_response": "Error calling API: 500 Server Error: Internal Server Error for url: http://localhost:3000/api/chat",
+      "generated_response": "I couldn't find specific recipes that highlight quinoa in my database. Would you like to try searching for something else or perhaps types of dishes that include quinoa? Let me know!",
       "accuracy": {
-        "score": 0,
-        "reasoning": "The generated response is completely incorrect. It does not address the user's request for information from a recipe database, nor does it suggest trying a different search. Instead, it provides an error message about a server issue, which is not relevant to the expected response.",
-        "raw_response": "REASONING: The generated response is completely incorrect. It does not address the user's request for information from a recipe database, nor does it suggest trying a different search. Instead, it provides an error message about a server issue, which is not relevant to the expected response.\nSCORE: 0"
+        "score": 3,
+        "reasoning": "The generated response is accurate and complete. It correctly states that the information sought is not in the recipe database and offers the user to try a different search, just like the expected response. The generated response even goes a step further by suggesting the user to try searching for dishes that include quinoa.",
+        "raw_response": "REASONING: The generated response is accurate and complete. It correctly states that the information sought is not in the recipe database and offers the user to try a different search, just like the expected response. The generated response even goes a step further by suggesting the user to try searching for dishes that include quinoa.\nSCORE: 3"
       },
       "relevance": {
-        "score": 0,
-        "reasoning": "The generated response is completely irrelevant to the user's query. The user asked for suggestions on what they can make with quinoa, but the response is an error message related to an API call, which has nothing to do with the user's query.",
-        "raw_response": "REASONING: The generated response is completely irrelevant to the user's query. The user asked for suggestions on what they can make with quinoa, but the response is an error message related to an API call, which has nothing to do with the user's query.\nSCORE: 0"
+        "score": 1,
+        "reasoning": "The generated response is relevant to the user's query as it acknowledges the user's request for quinoa recipes. However, it doesn't provide any specific recipes or suggestions for what can be made with quinoa, which is the key information the user is looking for. Instead, it suggests searching for something else or types of dishes that include quinoa.",
+        "raw_response": "REASONING: The generated response is relevant to the user's query as it acknowledges the user's request for quinoa recipes. However, it doesn't provide any specific recipes or suggestions for what can be made with quinoa, which is the key information the user is looking for. Instead, it suggests searching for something else or types of dishes that include quinoa.\nSCORE: 1"
       }
     }
   ],
-  "average_accuracy": 0.0,
-  "average_relevance": 0.0
+  "average_accuracy": 1.5,
+  "average_relevance": 1.75
 }
