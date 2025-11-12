@@ -61,7 +61,7 @@ SCORE: [0-3]
 
 
 def send_api_request(query: str) -> str:
-    """
+   """
     Ez a függvény kezeli az API hívást: HTTP POST requestet küld
     a RAG chatbot API-nak, a kérdést JSON formátumba csomagolja,
     megvárja, majd visszaadja az AI válaszát.
@@ -100,6 +100,12 @@ def send_api_request(query: str) -> str:
 def evaluate_accuracy(generated_response: str, expected_response: str) -> Dict[str, Any]:
     """
     Use LLM Judge to evaluate if the generated response is accurate.
+    Mit csinál:
+        1. Előkészíti az LLM Judge promptot (az elvárt vs. generált választ).
+        2. Hívja az OpenAI API-t a GPT-4 modellel a relevanciát és pontosságot mérő prompt használatával.
+        3. Parszolja a válaszból a SCORE értéket (0-3).
+        4. Kivonja a REASONING-et (indoklást).
+        5. Visszaadja a pontszámot és az indoklást.
     
     Args:
         generated_response: The response from the AI
