@@ -7,73 +7,73 @@
   },
   "total_queries": 4,
   "accuracy_total": 6,
-  "relevance_total": 7,
+  "relevance_total": 10,
   "detailed_results": [
     {
       "document_title": "Chickpea Recipes",
       "query": "What can I make with chickpeas?",
       "expected_response": "You can make Hummus, Channa Masala (Chickpea Curry), and Chickpea Salad with chickpeas. Each is a delicious and popular dish.",
-      "generated_response": "You can make a delicious **Hummus** with chickpeas! Here's how to prepare it:\n\n### Hummus Recipe\n\n#### Ingredients:\n- **For the Chickpeas:**\n  - 1/2 lb dried chickpeas\n  - 1 tsp baking soda\n  - 2 tbsp kosher salt\n  - 6 cups cold water\n\n- **For the Tahini:**\n  - 1 whole head garlic, broken into individual unpeeled cloves\n  - 2/3 cup fresh lemon juice (about 3–4 lemons)\n  - 1/2 tsp ground cumin\n  - 1 cup tahini paste (about 10 oz)\n\n- **For the Hummus:**\n  - 1 tsp baking soda\n  - 1 tbsp salt\n  - 1 ",
+      "generated_response": "You can make a delicious **Hummus** with chickpeas! Here's the recipe for you:\n\n### Ingredients\n- **For Cooking Chickpeas:**\n  - 1/2 lb dried chickpeas\n  - 1 tsp baking soda\n  - 2 tbsp kosher salt\n  - 6 cups cold water\n\n- **For Tahini:**\n  - 1 whole head of garlic, broken into individual unpeeled cloves\n  - 2/3 cup fresh lemon juice (about 3–4 lemons)\n  - 1/2 tsp ground cumin\n  - 1 cup tahini paste (about 10 oz)\n\n- **For Hummus:**\n  - 1 tsp baking soda\n  - 1 tbsp salt\n  - 1 small onion, split in",
       "accuracy": {
         "score": 1,
-        "reasoning": "The generated response is accurate in terms of providing a detailed recipe for making Hummus with chickpeas. However, it is incomplete as it does not mention the other two dishes (Channa Masala and Chickpea Salad) that were mentioned in the expected response. Therefore, while the information provided is correct and detailed, it does not fully meet the expectations set by the expected response.",
-        "raw_response": "REASONING: The generated response is accurate in terms of providing a detailed recipe for making Hummus with chickpeas. However, it is incomplete as it does not mention the other two dishes (Channa Masala and Chickpea Salad) that were mentioned in the expected response. Therefore, while the information provided is correct and detailed, it does not fully meet the expectations set by the expected response.\nSCORE: 1"
+        "reasoning": "The generated response is accurate in terms of providing a detailed recipe for making Hummus with chickpeas. However, it is incomplete as it does not mention the other two dishes - Channa Masala (Chickpea Curry) and Chickpea Salad, which were part of the expected response. Therefore, while the information provided is correct and detailed, it is not complete as per the expected response.",
+        "raw_response": "REASONING: The generated response is accurate in terms of providing a detailed recipe for making Hummus with chickpeas. However, it is incomplete as it does not mention the other two dishes - Channa Masala (Chickpea Curry) and Chickpea Salad, which were part of the expected response. Therefore, while the information provided is correct and detailed, it is not complete as per the expected response.\nSCORE: 1"
       },
       "relevance": {
         "score": 3,
-        "reasoning": "The generated response is highly relevant to the user's query. The user asked what they can make with chickpeas and the response provided a detailed recipe for making hummus, which is a dish primarily made from chickpeas. The response includes a list of ingredients, step-by-step instructions, and even serving suggestions, which is more than what the user asked for.",
-        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked what they can make with chickpeas and the response provided a detailed recipe for making hummus, which is a dish primarily made from chickpeas. The response includes a list of ingredients, step-by-step instructions, and even serving suggestions, which is more than what the user asked for. \nSCORE: 3"
+        "reasoning": "The generated response is highly relevant to the user's query. The user asked what they could make with chickpeas, and the response provided a detailed recipe for making hummus, which is a dish primarily made from chickpeas. The response also included a list of ingredients and step-by-step instructions, making it easy for the user to follow.",
+        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked what they could make with chickpeas, and the response provided a detailed recipe for making hummus, which is a dish primarily made from chickpeas. The response also included a list of ingredients and step-by-step instructions, making it easy for the user to follow.\nSCORE: 3"
       }
     },
     {
       "document_title": "Potato Recipes",
       "query": "What can I make with potatoes?",
       "expected_response": "You can make Creamy Potato Soup, Aloo Matar (Potato and Pea Curry), and Potato and Green Chili Hash with potatoes.",
-      "generated_response": "Here’s a delicious recipe you can try using potatoes – it's for **Potato and Green Chili Hash**! 🥔🌶️\n\n### Ingredients:\n- **1 lb high-starch potatoes** (like russets), chopped into 1/2\" chunks\n- **2 medium onions**, coarsely chopped\n- **1.5 oz butter**\n- **2 cups vegetable stock**\n- **1 cup chicken stock** (or more vegetable stock)\n- **1 cup heavy whipping cream**\n- **1 large egg yolk**\n- **2 tbsp dry white wine**\n- **1.5 oz horseradish**, freshly grated\n- **Black pepper** (to taste)\n- **Salt** (",
+      "generated_response": "Here’s a delicious recipe you can try with potatoes: **Potato and Green Chili Hash**! \n\n### Ingredients:\n- 1 lb potatoes (high-starch, like russets), chopped into 1/2\" chunks\n- 2 medium onions, coarsely chopped\n- 1.5 oz butter\n- 2 cups vegetable stock\n- 1 cup chicken stock (or more vegetable stock)\n- 1 cup heavy whipping cream\n- 1 large egg yolk\n- 2 tbsp dry white wine\n- 1.5 oz horseradish, freshly grated\n- Black pepper to taste\n- Salt to taste\n\n### To Garnish:\n- Fresh dill, chopped\n- Good quali",
       "accuracy": {
         "score": 1,
-        "reasoning": "The generated response is partially correct. It does provide a recipe for a dish using potatoes, but it is not the correct recipe. The recipe given is not for Potato and Green Chili Hash, but rather seems to be for a creamy potato soup or something similar. The recipe does not include green chilies, which are a key ingredient in the dish mentioned in the expected response. Furthermore, the expected response asked for multiple recipes (Creamy Potato Soup, Aloo Matar, and Potato and Green Chili Hash), but the generated response only provided one recipe.",
-        "raw_response": "REASONING: The generated response is partially correct. It does provide a recipe for a dish using potatoes, but it is not the correct recipe. The recipe given is not for Potato and Green Chili Hash, but rather seems to be for a creamy potato soup or something similar. The recipe does not include green chilies, which are a key ingredient in the dish mentioned in the expected response. Furthermore, the expected response asked for multiple recipes (Creamy Potato Soup, Aloo Matar, and Potato and Green Chili Hash), but the generated response only provided one recipe.\nSCORE: 1"
+        "reasoning": "The generated response is partially correct. It provides a detailed recipe for a potato dish, but it's not clear if this recipe is for Potato and Green Chili Hash as the ingredients and instructions don't mention green chilies. Also, the expected response asked for three recipes: Creamy Potato Soup, Aloo Matar (Potato and Pea Curry), and Potato and Green Chili Hash, but the generated response only provides one recipe.",
+        "raw_response": "REASONING: The generated response is partially correct. It provides a detailed recipe for a potato dish, but it's not clear if this recipe is for Potato and Green Chili Hash as the ingredients and instructions don't mention green chilies. Also, the expected response asked for three recipes: Creamy Potato Soup, Aloo Matar (Potato and Pea Curry), and Potato and Green Chili Hash, but the generated response only provides one recipe. \nSCORE: 1"
       },
       "relevance": {
-        "score": 0,
-        "reasoning": "The generated response is highly relevant to the user's query. The user asked for something they could make with potatoes, and the assistant provided a detailed recipe for a dish that uses potatoes as a main ingredient. The response includes the ingredients needed, step-by-step instructions, and information on the time required and the number of servings. However, the title of the recipe mentions \"Green Chili\" but there's no green chili listed in the ingredients or mentioned in the instructions. This is a minor discrepancy but it doesn't make the response irrelevant.",
-        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked for something they could make with potatoes, and the assistant provided a detailed recipe for a dish that uses potatoes as a main ingredient. The response includes the ingredients needed, step-by-step instructions, and information on the time required and the number of servings. However, the title of the recipe mentions \"Green Chili\" but there's no green chili listed in the ingredients or mentioned in the instructions. This is a minor discrepancy but it doesn't make the response irrelevant.\nSCORE: 2.5"
+        "score": 3,
+        "reasoning": "The generated response is highly relevant to the user's query. The user asked for what they could make with potatoes, and the AI provided a detailed recipe for a dish that uses potatoes as a main ingredient. The response includes the ingredients needed, the cooking instructions, cooking time, and the number of servings, which are all useful and relevant information for someone looking to cook with potatoes.",
+        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked for what they could make with potatoes, and the AI provided a detailed recipe for a dish that uses potatoes as a main ingredient. The response includes the ingredients needed, the cooking instructions, cooking time, and the number of servings, which are all useful and relevant information for someone looking to cook with potatoes.\nSCORE: 3"
       }
     },
     {
       "document_title": "Thai Recipes",
       "query": "Do you have any Thai recipes?",
       "expected_response": "Yes, I have Pad Thai and Thai Fried Rice (Khao Phat). Both are authentic Thai dishes with detailed recipes.",
-      "generated_response": "I've got a delicious Thai recipe for you: **Pad Thai**! Here’s how to make it:\n\n### Pad Thai Recipe\n\n#### Ingredients:\n- **2 tbsp** vegetable oil\n- **1 large** egg (best at room temp)\n- **3 tsp** fish sauce\n- **2 tsp** dark soy sauce\n- **1 tsp** granulated sugar\n- **1 tbsp** garlic, finely chopped\n- **5 ounces** ground pork (or ground chicken thighs)\n- **1/4 cup** long beans, cut into 1/8\" slices\n- **1/4 cup** yellow onion, thinly sliced\n- **3-4** Thai green chiles\n- **3-4** dried Thai chiles (p",
+      "generated_response": "I've got a delicious Thai recipe for **Pad Thai**! It's a flavorful dish that's sure to impress. Here’s what you’ll need and how to prepare it:\n\n### **Pad Thai Recipe**\n\n#### **Ingredients:**\n- 2 tbsp vegetable oil\n- 1 large egg (best at room temp)\n- 3 tsp fish sauce\n- 2 tsp dark soy sauce\n- 1 tsp granulated sugar\n- 1 tbsp garlic, finely chopped\n- 5 ounces ground pork (or ground chicken thighs)\n- 1/4 cup long beans, cut into 1/8\" slices\n- 1/4 cup yellow onion, thinly sliced\n- 3-4 Thai green chil",
       "accuracy": {
         "score": 1,
-        "reasoning": "The generated response is accurate in the sense that it provides a detailed recipe for Pad Thai, which is indeed an authentic Thai dish. However, it is incomplete as it does not mention the other dish, Thai Fried Rice (Khao Phat), mentioned in the expected response. Therefore, it only partially fulfills the expected response.",
-        "raw_response": "REASONING: The generated response is accurate in the sense that it provides a detailed recipe for Pad Thai, which is indeed an authentic Thai dish. However, it is incomplete as it does not mention the other dish, Thai Fried Rice (Khao Phat), mentioned in the expected response. Therefore, it only partially fulfills the expected response.\nSCORE: 1"
+        "reasoning": "The generated response is partially correct. It provides a detailed recipe for Pad Thai, which is one of the dishes mentioned in the expected response. However, it does not mention or provide a recipe for Thai Fried Rice (Khao Phat), which is a significant omission. Additionally, the recipe provided seems to be for a different Thai dish (possibly Pad Kra Pao), not Pad Thai, as it includes ingredients like hot basil leaves and long beans which are not typically found in Pad Thai.",
+        "raw_response": "REASONING: The generated response is partially correct. It provides a detailed recipe for Pad Thai, which is one of the dishes mentioned in the expected response. However, it does not mention or provide a recipe for Thai Fried Rice (Khao Phat), which is a significant omission. Additionally, the recipe provided seems to be for a different Thai dish (possibly Pad Kra Pao), not Pad Thai, as it includes ingredients like hot basil leaves and long beans which are not typically found in Pad Thai. \nSCORE: 1"
       },
       "relevance": {
         "score": 3,
-        "reasoning": "The generated response is highly relevant to the user's query. The user asked for a Thai recipe and the assistant provided a detailed Thai recipe for Pad Thai, including ingredients and cooking instructions. The response was well-addressed and informative.",
-        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked for a Thai recipe and the assistant provided a detailed Thai recipe for Pad Thai, including ingredients and cooking instructions. The response was well-addressed and informative.\nSCORE: 3"
+        "reasoning": "The generated response is highly relevant to the user's query. The user asked for a Thai recipe, and the response provided a detailed recipe for Pad Thai, a popular Thai dish. The response includes a list of ingredients, step-by-step instructions, and information about cooking time and servings, which are all pertinent details when sharing a recipe. The response also offers additional help if the user has questions or needs further assistance, which is a nice touch.",
+        "raw_response": "REASONING: The generated response is highly relevant to the user's query. The user asked for a Thai recipe, and the response provided a detailed recipe for Pad Thai, a popular Thai dish. The response includes a list of ingredients, step-by-step instructions, and information about cooking time and servings, which are all pertinent details when sharing a recipe. The response also offers additional help if the user has questions or needs further assistance, which is a nice touch.\nSCORE: 3"
       }
     },
     {
       "document_title": "Non-existent Ingredient",
       "query": "What can I make with quinoa?",
       "expected_response": "I don't have information about that in my recipe database. Would you like to try a different search?",
-      "generated_response": "I couldn't find specific recipes that highlight quinoa in my database. Would you like to try searching for something else or perhaps types of dishes that include quinoa? Let me know!",
+      "generated_response": "I don't have information about that in my recipe database. Would you like to try a different search?",
       "accuracy": {
         "score": 3,
-        "reasoning": "The generated response is accurate and complete. It correctly states that the information sought is not in the recipe database and offers the user to try a different search, just like the expected response. The generated response even goes a step further by suggesting the user to try searching for dishes that include quinoa.",
-        "raw_response": "REASONING: The generated response is accurate and complete. It correctly states that the information sought is not in the recipe database and offers the user to try a different search, just like the expected response. The generated response even goes a step further by suggesting the user to try searching for dishes that include quinoa.\nSCORE: 3"
+        "reasoning": "The generated response perfectly matches the expected response. There are no errors, omissions, or inaccuracies.",
+        "raw_response": "REASONING: The generated response perfectly matches the expected response. There are no errors, omissions, or inaccuracies.\nSCORE: 3"
       },
       "relevance": {
         "score": 1,
-        "reasoning": "The generated response is relevant to the user's query as it acknowledges the user's request for quinoa recipes. However, it doesn't provide any specific recipes or suggestions for what can be made with quinoa, which is the key information the user is looking for. Instead, it suggests searching for something else or types of dishes that include quinoa.",
-        "raw_response": "REASONING: The generated response is relevant to the user's query as it acknowledges the user's request for quinoa recipes. However, it doesn't provide any specific recipes or suggestions for what can be made with quinoa, which is the key information the user is looking for. Instead, it suggests searching for something else or types of dishes that include quinoa.\nSCORE: 1"
+        "reasoning": "The generated response is partially relevant to the user's query. The user asked what they can make with quinoa, and the assistant responded by saying it doesn't have information in its recipe database. While it doesn't provide any recipes or ideas for what the user can make with quinoa, it does acknowledge the user's query and offers to help with a different search.",
+        "raw_response": "REASONING: The generated response is partially relevant to the user's query. The user asked what they can make with quinoa, and the assistant responded by saying it doesn't have information in its recipe database. While it doesn't provide any recipes or ideas for what the user can make with quinoa, it does acknowledge the user's query and offers to help with a different search.\nSCORE: 1"
       }
     }
   ],
   "average_accuracy": 1.5,
-  "average_relevance": 1.75
+  "average_relevance": 2.5
 }
