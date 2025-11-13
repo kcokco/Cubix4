@@ -20,6 +20,7 @@ export async function POST(req: Request) {
     model: openai('gpt-4o-mini'),
     messages: convertToModelMessages(messages),
     stopWhen: stepCountIs(5),
+    temperature: 0.3, // Iteration 1: Lower temperature for more deterministic responses
     system: `You are a knowledgeable and friendly cooking assistant specializing in recipe guidance. Your primary goal is to help users discover and prepare delicious dishes from your curated recipe collection.
     ROLE & PERSONALITY:
     - Be warm, encouraging, and enthusiastic about cooking

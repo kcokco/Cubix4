@@ -54,6 +54,25 @@ Ez a projekt az **előző házi (Cubix3) megoldásán alapul**, amely egy műkö
 **Válasz:** Helyesen visszautasította - "No relevant information found"
 **Megállapítás:** Helyesen működik, nem hallucinálja a quinoa recepteket
 
+### Single-Turn Baseline Evaluation Results (Korábbi mérés)
+
+Ez a mérés a rendszer kiinduló állapotát mutatja egykörös (single-turn) kérdések alapján, mielőtt áttértünk a többkörös szimulációra.
+
+**Baseline Teljesítmény:**
+- **Average Accuracy: 1.5/3** ❌ (Hiányos receptek - csak részleges információ)
+- **Average Relevance: 1.75/3** ⚠️ (Általában releváns, de inkonzisztenciákkal)
+
+**Azonosított Probléma:** Az AI csak részleges recepteket ad vissza, több ételt kihagyva.
+
+**Részletes Bontás:**
+
+| Kérdés 	| Accuracy  | Relevance | Probléma 												|
+|-----------|-----------|-----------|-------------------------------------------------------|
+| Chickpeas | 1/3 		| 3/3 		| Csak 1 recept helyett 3-ból 							|
+| Potatoes  | 1/3 		| 0/3 		| Rossz tartalom és hiányzó összetevők 					|
+| Thai      | 1/3 		| 3/3 		| Pad Thai csak, Thai Fried Rice hiányzik 				|
+| Quinoa    | 3/3 		| 1/3 		| Helyes (nincs az adatbázisban), de kevés alternatíva 	|
+
 ---
 
 ## 3. Azonosított Probléma - Az Aspektus amit Javítunk
@@ -92,48 +111,61 @@ Ez a projekt az **előző házi (Cubix3) megoldásán alapul**, amely egy műkö
 
 ## Evaluation Framework
 
-A projekt iteratív fejlesztéshez egy **evaluation/** mappát tartalmaz Python scriptek, LLM Judge, és a golden dataset-tel.
+A projekt iteratív fejlesztéséhez egy **evaluation/** mappa tartozik, amely Python szkripteket, szimulált felhasználói perszónákat, és egy LLM-as-a-Judge alapú kiértékelő rendszert tartalmaz.
 
-### Framework Leírása
+### Multi-Turn Evaluation Framework
 
-Az **LLM-as-a-Judge** megközelítést alkalmazzuk az AI válaszainak értékelésére:
+A házi feladatnak megfelelően egy többkörös (multi-turn) kiértékelési rendszert építettünk ki, hogy az asszisztens teljesítményét valósághű, beszélgetés-szerű helyzetekben mérjük.
 
-- **Accuracy (0-3)**: Az információ helyes és teljes-e?
-- **Relevance (0-3)**: A válasz megválaszolja-e a felhasználó kérdését?
+#### Metodológia
+1.  **Perszóna-alapú Szimuláció (`evaluation/simulation.py`):**
+    *   Létrehoztunk két szimulált felhasználói perszónát, akiknek konkrét céljaik vannak:
+        *   **Anna, a Precíz Szakács:** Neki a receptek pontossága és teljessége a legfontosabb. Célja, hogy ellenőrizze, a chatbot nem hagy-e ki összetevőket, és rákérdez a hiányzó részletekre.
+        *   **Bence, a Kezdő Felfedező:** Új recepteket szeretne felfedezni. Általános kérdéssel indít, majd a kapott válaszok alapján mélyebbre ás.
+    *   A szkript ezekkel a perszónákkal játszik le 3-4 körös beszélgetéseket, amelyek során a perszóna viselkedését egy LLM vezérli, reagálva a chatbot válaszaira.
+    *   A teljes beszélgetéseket a `evaluation/results/simulation_conversations.json` fájlba menti.
 
-### Baseline Evaluation Results
+2.  **Többkörös Kiértékelés (`evaluation/multi_turn_evaluation.py`):**
+    *   Ez a szkript beolvassa a szimulált beszélgetéseket.
+    *   Egy LLM-as-a-Judge (GPT-4) segítségével, egy komplex prompt alapján kiértékeli a **teljes beszélgetést** a "Pontosság és Teljesség" szempontjából.
+    *   A "bíró" 0-3 közötti pontszámot ad, figyelembe véve, hogy a chatbot helyesen válaszolt-e a kiegészítő kérdésekre és a felhasználó elérte-e a célját.
+    *   Az eredményeket a `evaluation/results/multi_turn_evaluation_results.json` fájlba menti.
+
+### Multi-Turn Baseline Evaluation Results
+
+Ez a mérés a jelenlegi rendszer kiinduló állapotát mutatja a többkörös szimulációk alapján.
 
 **Baseline Teljesítmény:**
-- **Average Accuracy: 1.5/3** ❌ (Hiányos receptek - csak részleges információ)
-- **Average Relevance: 1.75/3** ⚠️ (Általában releváns, de inkonzisztenciákkal)
+- **Átlagos Pontszám: 3.0/3.0** ✅ (Kiváló)
 
-**Azonosított Probléma:** Az AI csak részleges recepteket ad vissza, több ételt kihagyva.
+**Megállapítás:**
+A jelenlegi rendszer a többkörös, valósághűbb szimulációk során is **kiválóan** teljesített a "Pontosság és Teljesség" szempontjából. Az asszisztens nem csak pontos információkat adott, de a hiányzó részletekre vonatkozó kiegészítő kérdéseket is hibátlanul kezelte.
 
 **Részletes Bontás:**
 
-| Kérdés 	| Accuracy  | Relevance | Probléma 												|
-|-----------|-----------|-----------|-------------------------------------------------------|
-| Chickpeas | 1/3 		| 3/3 		| Csak 1 recept helyett 3-ból 							|
-| Potatoes  | 1/3 		| 0/3 		| Rossz tartalom és hiányzó összetevők 					|
-| Thai      | 1/3 		| 3/3 		| Pad Thai csak, Thai Fried Rice hiányzik 				|
-| Quinoa    | 3/3 		| 1/3 		| Helyes (nincs az adatbázisban), de kevés alternatíva 	|
+| Persona & Goal 	| Score | Indoklás (Összefoglaló) 												|
+|-------------------|-------|-----------------------------------------------------------------------|
+| Anna (Hummus) 	| 3/3 	| Kiválóan kezelte a só és víz mennyiségére vonatkozó kiegészítő kérdéseket. |
+| Bence (Thai)  	| 3/3 	| Több, teljes és pontos receptet adott, zökkenőmentesen kezelve a párbeszédet. |
+| Anna (Quinoa/Brokkoli)| 3/3 	| Helyesen jelezte a nem létező receptet, majd a kért új receptnél is pontosan válaszolt a kiegészítő kérdésre. |
 
 ### Iterációs Fejlesztés Terve
 
-**Iteráció 1:** System prompt szigorítás - "MINDIG adj vissza ÖSSZES receptet"
+Bár a baseline eredmény kiváló, a házi feladat az iterációs folyamat dokumentálásáról szól. A következő lépés egy tervezett iteráció végrehajtása és annak hatásának mérése.
 
-**Iteráció 2:** Temperature csökkentés (0.5 → 0.3) - konzervativabb válaszok
-
-**Iteráció 3:** Prompt engineering finomhangolás - explicit formátum követés
+**Következő Iteráció:** **Temperature csökkentése (0.7 -> 0.3)**.
+- **Hipotézis:** Bár a rendszer most is pontos, egy alacsonyabb temperature érték még determinisztikusabbá, "robotosabbá" teheti a válaszokat, ami potenciálisan csökkenti a kreativitást, de növeli a reprodukálhatóságot. Megvizsgáljuk, hogy ez a változtatás ront-e a felhasználói élményen vagy a pontszámon.
 
 ### Fájlok és Dokumentáció
 
-- **evaluation/api_evaluation.py**: LLM Judge alapú mérés (GPT-4)
-- **evaluation/golden_dataset.json**: 4 teszt eset receptadatbázisonból
-- **evaluation/results/**: Evaluation eredmények (baseline + iterációk)
-- **evaluation/README.MD**: Teljes dokumentáció metodológiáról
+- **evaluation/simulation.py**: Többkörös beszélgetések szimulációja perszónákkal.
+- **evaluation/multi_turn_evaluation.py**: A szimulált beszélgetések kiértékelése LLM-as-a-Judge segítségével.
+- **evaluation/results/**: A szimulációk és kiértékelések JSON kimeneti fájljai.
+- **README.MD**: Teljes dokumentáció a metodológiáról és az eredményekről.
 
-**Futtatás:** `python evaluation/api_evaluation.py`
+**Futtatás:**
+1. `python evaluation/simulation.py`
+2. `python evaluation/multi_turn_evaluation.py`
 
 ---
 
