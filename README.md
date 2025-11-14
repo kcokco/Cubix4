@@ -176,10 +176,10 @@ A projekt célja az volt, hogy egy konkrét aspektust (Pontosság és Teljesség
 
 ## 6. Fejlesztési Lehetőségek (Jövőbeli)
 
-- [ ] Metadata szűrés (prep_time, vegetarian, cuisine, stb.)
 - [ ] Batch evaluáció 20-30 random kérdéssel
 - [ ] Hallucináció detektálás (comparing DB vs. output)
 - [ ] User feedback loop (thumbs up/down)
+- [ ] Metadata szűrés (prep_time, vegetarian, cuisine, stb.)
 
 ---
 
