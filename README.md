@@ -93,19 +93,98 @@ Ez a mérés a rendszer kiinduló állapotát mutatja egykörös (single-turn) k
 
 ---
 
-## 5. Iterációs Fejlesztés
+## 5. Iteratív Fejlesztés
 
-(Még nem hajtott végre - Baseline után)
+### Iteráció 1 (Hibás): Temperature Csökkentése (0.7 -> 0.3) - Vegyes nyelvű kommunikáció
 
-### Iteráció 1: System Prompt szigorítás
-- "MUST include ALL ingredients EXACTLY as listed in database"
-- Stricter RAG adherence
+**Hipotézis:** A `temperature` csökkentése determinisztikusabbá teszi a válaszokat, javítva a pontosságot.
+**Akció:** `temperature` beállítása `0.3`-ra a `route.ts`-ben.
+**Eredmények:**
+- **Átlagos Pontszám: 2.0/3.0** ❌ (Visszaesés a 3.0-s baseline-ról)
+- **Kritikus hiba:** A chatbot egy kiegészítő kérdésre nem adott választ (`API did not return a valid response.`).
+- **Hallucináció:** A chatbot egy "bulgur saláta" receptből kihagyta magát a bulgurt.
+**Konklúzió:** A hipotézis megbukott. A `temperature` csökkentése rontotta a pontosságot, és új hibatípusokat hozott elő. A nyelvi eltérés (magyar follow-up kérdések) valószínűleg hozzájárult a problémákhoz.
 
-### Iteráció 2: Temperature/Sampling módosítás
-- Lower temperature (0.5 → 0.3) = konzervativabb válaszok
+---
 
-### Iteráció 3: Prompt engineering
-- Explicit format: "List ingredients in this exact order from database"
+### Iteráció 2 (Hibás): System Prompt Szigorítása - Vegyes nyelvű kommunikáció
+
+**Hipotézis:** Szigorúbb system prompt javítja a chatbot ragaszkodását a forrásadatokhoz.
+**Akció:** Szigorúbb szabályok hozzáadása a system prompt-hoz a `route.ts`-ben.
+**Eredmények:**
+- **Átlagos Pontszám: 1.33/3.0** ❌ (Jelentős visszaesés a 3.0-s baseline-ról)
+- **Kritikus hiba:** A chatbot azt állította, nincs információja olyan alapvető hozzávalókról, mint a paradicsom és a burgonya.
+**Konklúzió:** A szigorítás negatív hatással volt. A túlságosan merev szabályok gátolták a modellt a felhasználói szándék rugalmas értelmezésében és a releváns információk hatékony visszakeresésében. A nyelvi eltérés itt is valószínűleg súlyosbította a helyzetet.
+
+---
+
+### Iteráció 3 (Javított): Temperature Csökkentése (0.7 -> 0.3) - Angol nyelvű kommunikáció
+
+**Hipotézis:** A `temperature` csökkentése determinisztikusabbá teszi a válaszokat, javítva a pontosságot, feltételezve, hogy a kommunikáció végig angolul zajlik.
+**Akció:** `temperature` beállítása `0.3`-ra a `route.ts`-ben, és a `simulation.py` módosítása angol nyelvű perszóna kommunikációra.
+**Eredmények:**
+- **Átlagos Pontszám: 2.33/3.0** ⚠️ (Javulás a vegyes nyelvű 2.0-ról, de még mindig elmarad a baseline-tól)
+- **Javulás:** A kritikus hibák (API hiba, alapvető hozzávalók meg nem találása) megszűntek.
+- **Probléma:** A modell kevésbé rugalmasan értelmezte a felhasználói szándékot (pl. csicseriborsó salátát ajánlott hummusz helyett), és apróbb kihagyások (pl. fokhagyma lépés) továbbra is előfordultak.
+**Konklúzió:** A nyelvi eltérés volt a kritikus hibák fő oka. A `temperature: 0.3` beállítás azonban még angol nyelvű kommunikációval is szuboptimális, mert a modell kevésbé rugalmas és hajlamosabb apróbb hibákra.
+
+---
+
+### Iteráció 4 (Javított): System Prompt Szigorítása - Angol nyelvű kommunikáció
+
+**Hipotézis:** Szigorúbb system prompt javítja a chatbot ragaszkodását a forrásadatokhoz, feltételezve, hogy a kommunikáció végig angolul zajlik.
+**Akció:** A `temperature` visszaállítása alapértelmezettre, és a szigorúbb system prompt alkalmazása a `route.ts`-ben. A `simulation.py` angol nyelvű perszóna kommunikációra van beállítva.
+**Eredmények:**
+- **Átlagos Pontszám: 2.67/3.0** ⚠️ (Javulás az előző javított iterációhoz (2.33) képest, de még mindig elmarad a baseline-tól)
+- **Javulás:** A Hummus és Quinoa/Lencse esetekben tökéletes 3 pontot ért el a chatbot.
+- **Probléma:** A Thai recept beszélgetésben kritikus visszaesés történt: a chatbot nem tudott részleteket adni egy általa korábban felsorolt receptről.
+**Konklúzió:** A szigorúbb system prompt angol nyelvű kommunikációval is vegyes eredményeket hozott. Bár bizonyos esetekben javított, más esetekben új, kritikus hibákat vezetett be. Ez is azt mutatja, hogy az eredeti, kiegyensúlyozott system prompt volt a leghatékonyabb.
+
+---
+
+### Az Iteratív Fejlesztés Összegzése és Tanulságai
+
+Az iteratív fejlesztési folyamat során a következő fontos tanulságokat vontuk le:
+
+1.  **Nyelvi Eltérés Kritikus Hatása:** A legjelentősebb problémákat a szimulált felhasználók és a chatbot közötti nyelvi eltérés okozta. Amikor a perszónák magyarul tettek fel kiegészítő kérdéseket, a chatbot teljesítménye drasztikusan romlott, kritikus hibákhoz (API hiba, alapvető hozzávalók meg nem találása) vezetett. A kommunikáció angolra váltása azonnal megszüntette ezeket a súlyos problémákat.
+2.  **A `temperature` paraméter hatása:** A `temperature` csökkentése `0.3`-ra (még angol nyelvű kommunikációval is) rontotta a chatbot teljesítményét a baseline-hoz képest. A modell kevésbé rugalmasan értelmezte a felhasználói szándékot, és hajlamosabb volt apróbb kihagyásokra.
+3.  **A System Prompt szigorításának hatása:** A system prompt szigorítása (még angol nyelvű kommunikációval is) vegyes eredményeket hozott. Bár bizonyos esetekben javított a pontosságon, más esetekben új, kritikus hibákat vezetett be (pl. a Thai receptnél).
+4.  **Az Eredeti Baseline Kiváló Teljesítménye:** Az iterációk során bebizonyosodott, hogy az **eredeti baseline konfiguráció (alapértelmezett `temperature`, eredeti system prompt, angol nyelvű kommunikáció)** volt a legjobban teljesítő, tökéletes 3.0-s pontszámmal.
+5.  **Az Iteráció Fontossága:** Ez a folyamat kiválóan demonstrálja az iteratív fejlesztés és a mérések fontosságát. A látszólag logikus változtatások is váratlan eredményekhez vezethetnek, és csak a szisztematikus tesztelés és kiértékelés segítségével lehet azonosítani a valódi problémákat és a hatékony megoldásokat.
+
+**Következtetés:**
+A projekt célja az volt, hogy egy konkrét aspektust (Pontosság és Teljesség) azonosítsunk, mérjünk és javítsunk. Bár a kezdeti baseline már kiváló volt, az iterációk során szerzett tapasztalatok rávilágítottak a nyelvi kompatibilitás kritikus szerepére, és arra, hogy a modell finomhangolása során a "kevesebb néha több" elv érvényesülhet. Az eredeti konfiguráció bizonyult a legrobosztusabbnak és legpontosabbnak.
+
+---
+
+### Fájlok és Dokumentáció
+
+- **evaluation/simulation.py**: Többkörös beszélgetések szimulációja perszónákkal.
+- **evaluation/multi_turn_evaluation.py**: A szimulált beszélgetések kiértékelése LLM-as-a-Judge segítségével.
+- **evaluation/results/**: A szimulációk és kiértékelések JSON kimeneti fájljai.
+- **README.MD**: Teljes dokumentáció a metodológiáról és az eredményekről.
+
+**Futtatás:**
+1. `python evaluation/simulation.py`
+2. `python evaluation/multi_turn_evaluation.py`
+
+---
+
+## 6. Fejlesztési Lehetőségek (Jövőbeli)
+
+- [ ] Metadata szűrés (prep_time, vegetarian, cuisine, stb.)
+- [ ] Batch evaluáció 20-30 random kérdéssel
+- [ ] Hallucináció detektálás (comparing DB vs. output)
+- [ ] User feedback loop (thumbs up/down)
+
+---
+
+## Irodalom
+
+**Érdemes elolvasni az előző házira vonatkozóan (Cubix3-ban):**
+- Hallucináció problémája és boundary value analysis
+- Score tartomány analízis (0.75-0.85 "veszélyes zóna")
+- System prompt fine-tuning az adatforrás korlátozásához
 
 ---
 

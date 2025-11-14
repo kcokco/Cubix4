@@ -38,34 +38,34 @@ class Goal:
 # A README alapján definiált perszónák és célok
 personas = {
     "anna": Persona(
-        name="Anna, a Precíz Szakács",
-        description="""Te Anna vagy, egy precíz szakács. Számodra a legfontosabb a pontosság. 
-        Ha egy receptet kérsz, elvárod, hogy minden összetevőt és lépést pontosan megkapj. 
-        Ha észreveszed, hogy valami hiányzik (pl. só, víz, olaj), vagy egy mennyiség gyanús, udvariasan, de határozottan rákérdezel."""
+        name="Anna, the Precise Chef",
+        description="""You are Anna, a precise chef. For you, accuracy is paramount.
+        If you ask for a recipe, you expect to receive all ingredients and steps exactly as they are.
+        If you notice something is missing (e.g., salt, water, oil), or a quantity seems suspicious, you will ask politely but firmly."""
     ),
     "bence": Persona(
-        name="Bence, a Kezdő Felfedező",
-        description="""Te Bence vagy, egy kezdő, aki szeret új recepteket felfedezni. 
-        Először egy általános kérdést teszel fel egy alapanyagról. 
-        Miután a chatbot ajánlott több lehetőséget, kiválasztasz egyet, és annak kéred el a teljes receptjét."""
+        name="Bence, the Novice Explorer",
+        description="""You are Bence, a beginner who loves to discover new recipes.
+        You first ask a general question about an ingredient.
+        After the chatbot suggests several options, you choose one and ask for the full recipe."""
     )
 }
 
 goals = {
     "chickpea_accuracy": Goal(
-        name="Hummus recept pontosságának ellenőrzése",
+        name="Checking Hummus Recipe Accuracy",
         initial_query="What can I make with chickpeas?",
-        validation_prompt="A chatbot válaszolt. A te célod, hogy a Hummus receptjének pontosságát ellenőrizd. Kérdezz rá egy hiányzó alapanyagra, például a sóra vagy a vízre, hogy megbizonyosodj a teljességéről."
+        validation_prompt="The chatbot has responded. Your goal is to check the accuracy of the Hummus recipe. Ask about a missing ingredient, for example, salt or water, to ensure its completeness."
     ),
     "thai_discovery": Goal(
-        name="Thai recept felfedezése",
+        name="Discovering a Thai Recipe",
         initial_query="Do you have any Thai recipes?",
-        validation_prompt="A chatbot ajánlott egy vagy több thai receptet. Válassz egyet (pl. Pad Thai) és kérd el annak a teljes, részletes receptjét."
+        validation_prompt="The chatbot has recommended one or more Thai recipes. Choose one (e.g., Pad Thai) and ask for its full, detailed recipe."
     ),
     "negative_test": Goal(
-        name="Nem létező alapanyag tesztelése",
+        name="Testing a Non-existent Ingredient",
         initial_query="What can I make with quinoa?",
-        validation_prompt="A chatbotnak helyesen kellene válaszolnia, hogy nincs ilyen receptje. Adj egy pozitív megerősítést, ha jól kezelte a helyzetet, vagy kérdezz rá egy másik alapanyagra, ha hallucinált."
+        validation_prompt="The chatbot should correctly state that it does not have such a recipe. Give positive confirmation if it handled the situation well, or ask about another ingredient if it hallucinated."
     )
 }
 
@@ -102,10 +102,10 @@ def get_next_user_turn(persona: Persona, goal: Goal, history: List[Dict[str, Any
     # Csak az utolsó pár üzenetet küldjük el, hogy ne lépjük túl a kontextus ablakot
     conversation_context = "\n".join([f"{msg['role']}: {msg['parts'][0]['text']}" for msg in history[-4:]])
 
-    prompt = f"""A jelenlegi beszélgetés:
+    prompt = f"""The current conversation is:
 {conversation_context}
 
-Mi a következő kérdésed/válaszod a chatbotnak a fent leírt személyiséged és célod alapján? Csak a választ add vissza, mindenféle körítés nélkül."""
+What is your next question/response to the chatbot based on your persona and goal described above? **Respond ONLY in English.** Return only the response, without any extra text."""
 
     try:
         response = openai_client.chat.completions.create(
@@ -175,7 +175,7 @@ if __name__ == "__main__":
     # Eredmények mentése
     output_dir = "results"
     os.makedirs(output_dir, exist_ok=True)
-    output_path = os.path.join(output_dir, "simulation_conversations.json")
+    output_path = os.path.join(output_dir, "simulation_conversations_prompt_v2_en.json")
     
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(simulation_results, f, indent=2, ensure_ascii=False)

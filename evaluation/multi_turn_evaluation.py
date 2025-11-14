@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 from typing import Dict, List, Any
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -110,18 +111,22 @@ def evaluate_conversation(conversation_log: Dict[str, Any]) -> Dict[str, Any]:
             # Fallback, ha a "REASONING:" marker nem található
             reasoning = result_text
 
-        # Pontszám kinyerése
+        # Pontszám kinyerése reguláris kifejezéssel
         score_marker = "SCORE:"
-        score_start_index = result_text.find(score_marker)
+        score_start_index = result_text.upper().find(score_marker)
         if score_start_index != -1:
-            score_str = result_text[score_start_index + len(score_marker):].strip()
-            # Csak a számot vesszük figyelembe, eltávolítva a felesleges karaktereket
-            numeric_part = "".join(filter(str.isdigit, score_str))
-            if numeric_part:
+            score_str = result_text[score_start_index + len(score_marker):]
+            # Keressük az első, 0-3 közötti számot
+            match = re.search(r'\b[0-3]\b', score_str)
+            if match:
                 try:
-                    score = int(numeric_part)
-                except ValueError:
+                    score = int(match.group(0))
+                except (ValueError, IndexError):
                     score = 0 # Hiba esetén 0 pont
+            else:
+                score = 0 # Ha nem található 0-3 közötti szám
+        else:
+            score = 0 # Ha a "SCORE:" marker nem található
         
         return {"score": score, "reasoning": reasoning}
 
@@ -129,7 +134,7 @@ def evaluate_conversation(conversation_log: Dict[str, Any]) -> Dict[str, Any]:
         return {"score": 0, "reasoning": f"An error occurred during evaluation: {e}"}
 
 if __name__ == "__main__":
-    input_file = os.path.join("results", "simulation_conversations.json")
+    input_file = os.path.join("results", "simulation_conversations_prompt_v2_en.json")
     
     print(f"Kiértékelés indul a(z) '{input_file}' fájl alapján...")
     
@@ -163,7 +168,7 @@ if __name__ == "__main__":
         average_score = total_score / len(conversations) if conversations else 0
         
         # Eredmények mentése
-        output_file = os.path.join("results", "multi_turn_evaluation_results.json")
+        output_file = os.path.join("results", "multi_turn_evaluation_results_prompt_v2_en.json")
         final_output = {
             "overall_average_score": average_score,
             "detailed_results": all_results
