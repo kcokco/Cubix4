@@ -30,8 +30,8 @@ Ez a projekt az **előző házi (Cubix3) megoldásán alapul**, amely egy műkö
 
 ### Teszt Körülmények:
 - **Receptek száma**: 85 feltöltött receptfájl
-- **Kérdések nyelve**: Angol (az AI prompt angolul van)
-- **Kiértékelés módszere**: Manual testing + Tool call output vizsgálata
+- **Kérdések nyelve**: Angol (a system prompt angolul van)
+- **Kiértékelés módszere**: Manual testing + a tool hívások eredményének vizsgálata
 
 ### Teszt 1: Egyszerű Keresés 
 **Kérdés:** "What can I make with chickpeas?"
@@ -40,29 +40,29 @@ Ez a projekt az **előző házi (Cubix3) megoldásán alapul**, amely egy műkö
 **Megállapítás:** Valódi recept az adatbázisból
 **AZONBAN - PROBLÉMA AZONOSÍTVA:**
 - Az adatbázisban: "1 tsp baking soda", "1 tbsp salt", "6 cups water"
-- Az AI válaszban: **HIÁNYZANAK** ezek az összetevők.
+- Az AI válaszában: **HIÁNYZANAK** ezek az összetevők.
 - **Az AI módosította a receptet** - hallucináció típusú hiba történt.
 
 ### Teszt 2: Komplex Szűrés
 **Kérdés:** "Show me recipes that take less than 30 minutes to prepare"
 **Válasz:** "No relevant information found"
 **Tool Output:** Empty result (nincs szűrési lehetőség az időtartam alapján).
-**Megállapítás:** A rendszer nem támogatja a szűrést metadata alapján.
+**Megállapítás:** A rendszer nem támogatja az ilyen fajta szűréseket jelenleg.
 
 ### Teszt 3: Negatív Teszt 
 **Kérdés:** "What can I make with quinoa?"
-**Válasz:** Helyesen visszautasította - "No relevant information found"
+**Válasz:** Helyesen visszautasította, közölte, hogy nincs információja erről. - "No relevant information found"
 **Megállapítás:** Helyesen működik, nem hallucinálja a quinoa recepteket
 
-### Single-Turn Baseline Evaluation Results (Korábbi mérés)
+### Single-Turn Baseline Evaluation Results
 
-Ez a mérés a rendszer kiinduló állapotát mutatja egykörös (single-turn) kérdések alapján, mielőtt áttértünk a többkörös szimulációra.
+Ez a mérés a rendszer kiinduló állapotát mutatja egykörös (single-turn) kérdések alapján.
 
 **Baseline Teljesítmény:**
 - **Average Accuracy: 1.5/3** ❌ (Hiányos receptek - csak részleges információ)
 - **Average Relevance: 1.75/3** ⚠️ (Általában releváns, de inkonzisztenciákkal)
 
-**Azonosított Probléma:** Az AI csak részleges recepteket ad vissza, több ételt kihagyva.
+**Azonosított Probléma:** Az AI csak részleges recepteket ad vissza, ha lenne is több találat, azokat kihagyja.
 
 **Részletes Bontás:**
 
@@ -70,30 +70,34 @@ Ez a mérés a rendszer kiinduló állapotát mutatja egykörös (single-turn) k
 |-----------|-----------|-----------|-------------------------------------------------------|
 | Chickpeas | 1/3 		| 3/3 		| Csak 1 recept helyett 3-ból 							|
 | Potatoes  | 1/3 		| 0/3 		| Rossz tartalom és hiányzó összetevők 					|
-| Thai      | 1/3 		| 3/3 		| Pad Thai csak, Thai Fried Rice hiányzik 				|
-| Quinoa    | 3/3 		| 1/3 		| Helyes (nincs az adatbázisban), de kevés alternatíva 	|
+| Thai      | 1/3 		| 3/3 		| Pad Thai-t megtalálja, Thai Fried Rice hiányzik		|
+| Quinoa    | 3/3 		| 1/3 		| Helyes, nincs az adatbázisban							|
 
 ---
 
-## 3. Azonosított Probléma - Az Aspektus amit Javítunk
+## 3. Azonosított Probléma - A választott aspektus a fentiek alapján a pontosság, teljesség 
 
 ### Fő Probléma: "Pontosság és Teljesség"
 
-**Definíció:** Az AI módosítja/kihagyja az adatbázisban lévő receptek összetevőit helyett 100%-ban azt követve.
+**Definíció:** Az AI módosítja vagy ki is hagyja az adatbázisban lévő receptek összetevőit, ahelyett, hogy azt 100%-ban azt követné. Ez kritikus probléma lehet bizonyos típusú, feladatú rendszereknél. A főzés is ilyen.
 
 **Tünetek:**
-- Ingrediensek kihagyása (mint a Hummus esetében).
-- Az AI saját tudásából "javítja" a recepteket.
+- Összetevők kihagyása, mint a Hummus esetében.
+- Az AI a saját tudásából javítja, kiegészíti a recepteket.
 - Nem szigorú az "ONLY use database information" instrukció követésében.
 
-**Miért fontos?**
-- Receptnél a **pontosság KRITIKUS** - ha hiányzik egy-egy összetevő, az étel rossz lesz.
-- A RAG rendszer lényege, hogy **csak az adatbázist követi**, nem a saját tudást
+**Miért fontos/kritikus ez?**
+- Egy receptnél a **pontosság KRITIKUS** - ha hiányzik egy-egy összetevő, az étel rossz lesz.
+- A RAG rendszer lényege, hogy **csak az adatbázist követi**, nem a saját tudást.
 - **Hallucináció megelőzése**
 
 ---
 
 ## 5. Iteratív Fejlesztés
+
+A feladat elvégzése közben nem csak az AI hibázott. Az ember is. A chatbot nyelve angol, de én elfelejtettem azt, hogy ez az alkalmazás nem ért magyarul és az iterációk összerakásánál magyarnyelvű szöveget küldtem be.
+Amikor észrvettem, akkor úgy gondoltam jó teszt lesz ebből is, megnézem milyen értékeket kapok vissza. Ennek eredményét írtam le itt.
+Utána megcsináltam a teszteket újra, módosítottam a bemeneti szöveget angolra. Annak eredményét is leírtam lejjebb.
 
 ### Iteráció 1 (Hibás): Temperature Csökkentése (0.7 -> 0.3) - Vegyes nyelvű kommunikáció
 
@@ -126,13 +130,13 @@ Ez a mérés a rendszer kiinduló állapotát mutatja egykörös (single-turn) k
 - **Átlagos Pontszám: 2.33/3.0** ⚠️ (Javulás a vegyes nyelvű 2.0-ról, de még mindig elmarad a baseline-tól)
 - **Javulás:** A kritikus hibák (API hiba, alapvető hozzávalók meg nem találása) megszűntek.
 - **Probléma:** A modell kevésbé rugalmasan értelmezte a felhasználói szándékot (pl. csicseriborsó salátát ajánlott hummusz helyett), és apróbb kihagyások (pl. fokhagyma lépés) továbbra is előfordultak.
-**Konklúzió:** A nyelvi eltérés volt a kritikus hibák fő oka. A `temperature: 0.3` beállítás azonban még angol nyelvű kommunikációval is szuboptimális, mert a modell kevésbé rugalmas és hajlamosabb apróbb hibákra.
+**Konklúzió:** A nyelvi eltérés volt a kritikus hibák fő oka. A `temperature: 0.3` beállítás azonban még angol nyelvű kommunikációval sem érte el a célját, mert a modell kevésbé rugalmas és hajlamosabb apróbb hibákra.
 
 ---
 
 ### Iteráció 4 (Javított): System Prompt Szigorítása - Angol nyelvű kommunikáció
 
-**Hipotézis:** Szigorúbb system prompt javítja a chatbot ragaszkodását a forrásadatokhoz, feltételezve, hogy a kommunikáció végig angolul zajlik.
+**Hipotézis:** A szigorúbb system prompt javítja a chatbot ragaszkodását a forrásadatokhoz, feltételezve, hogy a kommunikáció végig angolul zajlik.
 **Akció:** A `temperature` visszaállítása alapértelmezettre, és a szigorúbb system prompt alkalmazása a `route.ts`-ben. A `simulation.py` angol nyelvű perszóna kommunikációra van beállítva.
 **Eredmények:**
 - **Átlagos Pontszám: 2.67/3.0** ⚠️ (Javulás az előző javított iterációhoz (2.33) képest, de még mindig elmarad a baseline-tól)
@@ -153,7 +157,7 @@ Az iteratív fejlesztési folyamat során a következő fontos tanulságokat von
 5.  **Az Iteráció Fontossága:** Ez a folyamat kiválóan demonstrálja az iteratív fejlesztés és a mérések fontosságát. A látszólag logikus változtatások is váratlan eredményekhez vezethetnek, és csak a szisztematikus tesztelés és kiértékelés segítségével lehet azonosítani a valódi problémákat és a hatékony megoldásokat.
 
 **Következtetés:**
-A projekt célja az volt, hogy egy konkrét aspektust (Pontosság és Teljesség) azonosítsunk, mérjünk és javítsunk. Bár a kezdeti baseline már kiváló volt, az iterációk során szerzett tapasztalatok rávilágítottak a nyelvi kompatibilitás kritikus szerepére, és arra, hogy a modell finomhangolása során a "kevesebb néha több" elv érvényesülhet. Az eredeti konfiguráció bizonyult a legrobosztusabbnak és legpontosabbnak.
+A projekt célja az volt, hogy egy konkrét aspektust (Pontosság és Teljesség) azonosítsunk, mérjünk és javítsunk. Bár a kezdeti baseline már jó eredményt produkált, az iterációk során szerzett tapasztalatok rávilágítottak a nyelvi kompatibilitás kritikus szerepére, és arra, hogy a modell finomhangolása során a "kevesebb néha több" elv érvényesülhet. Az eredeti konfiguráció bizonyult a legrobosztusabbnak és legpontosabbnak.
 
 ---
 
@@ -194,11 +198,11 @@ A projekt iteratív fejlesztéséhez egy **evaluation/** mappa tartozik, amely P
 
 ### Multi-Turn Evaluation Framework
 
-A házi feladatnak megfelelően egy többkörös (multi-turn) kiértékelési rendszert építettünk ki, hogy az asszisztens teljesítményét valósághű, beszélgetés-szerű helyzetekben mérjük.
+A házi feladatnak megfelelően egy többkörös (multi-turn) kiértékelési rendszert tartalmaz, hogy az asszisztens teljesítményét valósághű, beszélgetés-szerű helyzetekben mérjük.
 
 #### Metodológia
 1.  **Perszóna-alapú Szimuláció (`evaluation/simulation.py`):**
-    *   Létrehoztunk két szimulált felhasználói perszónát, akiknek konkrét céljaik vannak:
+    *   Létrehoztam két szimulált felhasználói perszónát, akiknek konkrét céljaik vannak:
         *   **Anna, a Precíz Szakács:** Neki a receptek pontossága és teljessége a legfontosabb. Célja, hogy ellenőrizze, a chatbot nem hagy-e ki összetevőket, és rákérdez a hiányzó részletekre.
         *   **Bence, a Kezdő Felfedező:** Új recepteket szeretne felfedezni. Általános kérdéssel indít, majd a kapott válaszok alapján mélyebbre ás.
     *   A szkript ezekkel a perszónákkal játszik le 3-4 körös beszélgetéseket, amelyek során a perszóna viselkedését egy LLM vezérli, reagálva a chatbot válaszaira.
@@ -222,9 +226,9 @@ A jelenlegi rendszer a többkörös, valósághűbb szimulációk során is **ki
 
 **Részletes Bontás:**
 
-| Persona & Goal 	| Score | Indoklás (Összefoglaló) 												|
-|-------------------|-------|-----------------------------------------------------------------------|
-| Anna (Hummus) 	| 3/3 	| Kiválóan kezelte a só és víz mennyiségére vonatkozó kiegészítő kérdéseket. |
+| Persona & Goal 	| Score | Indoklás (Összefoglaló) 														|
+|-------------------|-------|-------------------------------------------------------------------------------|
+| Anna (Hummus) 	| 3/3 	| Kiválóan kezelte a só és víz mennyiségére vonatkozó kiegészítő kérdéseket. 	|
 | Bence (Thai)  	| 3/3 	| Több, teljes és pontos receptet adott, zökkenőmentesen kezelve a párbeszédet. |
 | Anna (Quinoa/Brokkoli)| 3/3 	| Helyesen jelezte a nem létező receptet, majd a kért új receptnél is pontosan válaszolt a kiegészítő kérdésre. |
 
@@ -233,7 +237,7 @@ A jelenlegi rendszer a többkörös, valósághűbb szimulációk során is **ki
 Bár a baseline eredmény kiváló, a házi feladat az iterációs folyamat dokumentálásáról szól. A következő lépés egy tervezett iteráció végrehajtása és annak hatásának mérése.
 
 **Következő Iteráció:** **Temperature csökkentése (0.7 -> 0.3)**.
-- **Hipotézis:** Bár a rendszer most is pontos, egy alacsonyabb temperature érték még determinisztikusabbá, "robotosabbá" teheti a válaszokat, ami potenciálisan csökkenti a kreativitást, de növeli a reprodukálhatóságot. Megvizsgáljuk, hogy ez a változtatás ront-e a felhasználói élményen vagy a pontszámon.
+- **Hipotézis:** Bár a rendszer most is pontos, egy alacsonyabb temperature érték még determinisztikusabbá, "robotosabbá" teheti a válaszokat, ami potenciálisan csökkenti a kreativitást, de növeli a reprodukálhatóságot. Megvizsgáltam, hogy ez a változtatás ront-e a felhasználói élményen vagy a pontszámon.
 
 ### Fájlok és Dokumentáció
 
@@ -250,16 +254,9 @@ Bár a baseline eredmény kiváló, a házi feladat az iterációs folyamat doku
 
 ## 6. Fejlesztési Lehetőségek (Jövőbeli)
 
-- [ ] Metadata szűrés (prep_time, vegetarian, cuisine, stb.)
 - [ ] Batch evaluáció 20-30 random kérdéssel
 - [ ] Hallucináció detektálás (comparing DB vs. output)
 - [ ] User feedback loop (thumbs up/down)
+- [ ] Metadata szűrés (prep_time, vegetarian, cuisine, stb.)
 
 ---
-
-## Irodalom
-
-**Érdemes elolvasni az előző házira vonatkozóan (Cubix3-ban):**
-- Hallucináció problémája és boundary value analysis
-- Score tartomány analízis (0.75-0.85 "veszélyes zóna")
-- System prompt fine-tuning az adatforrás korlátozásához
